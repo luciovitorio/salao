@@ -33,6 +33,7 @@
                               class="w-full sm:w-auto"
                               position="left"
                               color="{{ $secondBtnColor }}"
+                              href="/{{ $linkSecondBtn }}"
                               wire:click="{{ $secondBtnAction }}"
                               wire:navigate>
                         {{ $secondBtnText }}

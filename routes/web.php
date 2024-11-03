@@ -23,6 +23,7 @@ use App\Livewire\Schedule\ScheduleComponent;
 use App\Livewire\Schedule\ScheduleFormComponent;
 use App\Livewire\Schedule\ScheduleShowComponent;
 use App\Livewire\Service\ServiceComponent;
+use App\Livewire\Service\ServiceEntryFormComponent;
 use App\Livewire\Service\ServiceFormComponent;
 use App\Livewire\Service\ServiceSellComponent;
 use App\Livewire\Service\ServiceShowComponent;
@@ -64,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
     // Service routes
     Route::get('/services', ServiceComponent::class)->name('services');
     Route::get('/services-create', ServiceFormComponent::class)->name('services.form');
+    Route::get('/services-entry', ServiceEntryFormComponent::class)->name('services.form.entry');
     Route::get('/services/{service}/show', ServiceShowComponent::class)->name('services.show');
     Route::get('/services/{service}/edit', ServiceFormComponent::class)->name('services.edit');
     Route::get('/services-sell', ServiceSellComponent::class)->name('services.sell');

@@ -12,7 +12,8 @@
             link="services-create"
             secondBtn="true"
             secondBtnText="Entrada"
-            secondBtnColor="secondary" />
+            secondBtnColor="secondary"
+            linkSecondBtn="services-entry" />
     <x-table :$headers
              :$rows
              striped

@@ -9,7 +9,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
-#[Title('Formulário de serviços')]
+#[Title('Formulário de cadastro serviços')]
 class ServiceFormComponent extends Component
 {
     use Interactions;
