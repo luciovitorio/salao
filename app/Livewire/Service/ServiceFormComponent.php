@@ -55,6 +55,7 @@ class ServiceFormComponent extends Component
                     'id' => $product->id,
                     'name' => $product->name,
                     'quantity' => $product->pivot->used_quantity,
+                    'cost_price' => $product->pivot->cost_price,
                     'unit_type' => $product->unit_type,
                     'step' => $product->qtd_used_per_service ?? 1
                 ];
@@ -76,12 +77,32 @@ class ServiceFormComponent extends Component
 
     public function handleAddProduct()
     {
+        $this->validate([
+            'product_id' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (collect($this->addedProducts)->contains('id', $value)) {
+                        $fail('Este produto já foi adicionado.');
+                    }
+                },
+            ],
+        ]);
+
         $product = Product::find($this->product_id);
+
+        // Verificar se o produto já está na lista
+        if (collect($this->addedProducts)->contains('id', $this->product_id)) {
+            session()->flash('error', 'Este produto já foi adicionado.');
+            return;
+        }
+
+        $cost_price = CostValueProductService::costValueCalculator($this->product_id, $this->used_quantity);
 
         if ($this->product_id && $this->used_quantity) {
             $this->addedProducts[] = [
                 'id' => $this->product_id,
                 'quantity' => $this->used_quantity,
+                'cost_price' => $cost_price,
                 'name' => $this->getProductName($this->product_id),
                 'unit_type' => $product->unit_type
             ];
@@ -209,6 +230,39 @@ class ServiceFormComponent extends Component
         $service->name = $this->name;
         $service->description = $this->description;
         $service->price = $this->price;
+
+        $processedProductIds = [];
+
+        foreach ($this->addedProducts as $addedProduct) {
+            $costPrice = CostValueProductService::costValueCalculator($addedProduct['id'], $addedProduct['quantity']);
+
+            if (in_array($addedProduct['id'], $this->existingProductIds)) {
+                $service->products()->updateExistingPivot(
+                    $addedProduct['id'],
+                    [
+                        'used_quantity' => $addedProduct['quantity'],
+                        'cost_price' => $costPrice
+                    ]
+                );
+            } else {
+                $service->products()->attach(
+                    $addedProduct['id'],
+                    [
+                        'used_quantity' => $addedProduct['quantity'],
+                        'cost_price' => $costPrice
+                    ]
+                );
+            }
+
+            $processedProductIds[] = $addedProduct['id'];
+        }
+
+        $uniqueExistingIds = array_unique($this->existingProductIds);
+        $productsToDetach = array_diff($uniqueExistingIds, $processedProductIds);
+        // dd($processedProductIds);
+        if (!empty($productsToDetach)) {
+            $service->products()->detach($productsToDetach);
+        }
 
         $service->save();
 

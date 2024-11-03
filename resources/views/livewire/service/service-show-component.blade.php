@@ -77,7 +77,8 @@
                                         </div>
                                     </td>
                                     <td class="px-3 border py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        {{ $product['quantity'] }} {{ $product['unit_type'] }}
+                                        {{ number_format($product['quantity'], 1, ',', '.') }}
+                                        {{ $product['unit_type'] }}
                                     </td>
                                     <td class="px-3 border py-3.5 text-sm text-gray-500 lg:table-cell">
                                         {{ 'R$ ' . number_format($product['cost_price'], 2, ',', '.') }}

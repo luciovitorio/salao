@@ -8,8 +8,11 @@
     @endif
 
     <x-Card title="Lista de serviços"
-            buttonText="Criar Serviço"
-            link="services-create" />
+            buttonText="Cadastrar Serviço"
+            link="services-create"
+            secondBtn="true"
+            secondBtnText="Entrada"
+            secondBtnColor="secondary" />
     <x-table :$headers
              :$rows
              striped

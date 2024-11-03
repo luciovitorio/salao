@@ -13,16 +13,16 @@
                                  wire:model='name' />
                     </div>
 
-                    <div class="sm:col-span-3">
-                        <x-textarea label="Descrição do serviço"
-                                    wire:model='description' />
-                    </div>
-
                     <div class="sm:col-span-2">
                         <x-input label="Preço *"
                                  wire:model='price'
                                  x-mask:dynamic="monetary"
                                  placeholder="R$ 0,00" />
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <x-textarea label="Descrição do serviço"
+                                    wire:model='description' />
                     </div>
                 </div>
             </div>
@@ -69,6 +69,10 @@
                                         Quantidade
                                     </th>
                                     <th scope="col"
+                                        class=" border px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                                        Valor
+                                    </th>
+                                    <th scope="col"
                                         class=" border px-3 py-3.5 text-center text-sm font-semibold text-gray-900 lg:table-cell">
                                         Excluir
                                     </th>
@@ -84,6 +88,9 @@
                                         </td>
                                         <td class="px-3 border py-3.5 text-sm text-gray-500 lg:table-cell">
                                             {{ $product['quantity'] }} {{ $product['unit_type'] }}
+                                        </td>
+                                        <td class="px-3 border py-3.5 text-sm text-gray-500 lg:table-cell">
+                                            R$ {{ number_format($product['cost_price'], 2, ',', '.') }}
                                         </td>
                                         <td class="px-3 border py-3.5 text-sm text-gray-500 lg:table-cell text-center">
                                             <x-button.circle icon="trash"

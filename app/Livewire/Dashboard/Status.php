@@ -36,10 +36,10 @@ class Status extends Component
         $this->diferencaServicos = $this->servicosMesAtual - $this->servicosMesAnterior;
 
         // Entradas do mês atual em services e sales onde is_paid é true
-        $entradasServicesMesAtual = Service::where('is_paid', true)
-            ->whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->sum('price');
+        // $entradasServicesMesAtual = Service::where('is_paid', true)
+        //     ->whereMonth('created_at', Carbon::now()->month)
+        //     ->whereYear('created_at', Carbon::now()->year)
+        //     ->sum('price');
 
         $entradasSalesMesAtual = Sale::where('is_paid', true)
             ->whereMonth('created_at', Carbon::now()->month)
@@ -47,10 +47,10 @@ class Status extends Component
             ->sum('total_price');
 
         // Entradas do mês anterior em services e sales onde is_paid é true
-        $entradasServicesMesAnterior = Service::where('is_paid', true)
-            ->whereMonth('created_at', Carbon::now()->subMonth()->month)
-            ->whereYear('created_at', Carbon::now()->subMonth()->year)
-            ->sum('price');
+        // $entradasServicesMesAnterior = Service::where('is_paid', true)
+        //     ->whereMonth('created_at', Carbon::now()->subMonth()->month)
+        //     ->whereYear('created_at', Carbon::now()->subMonth()->year)
+        //     ->sum('price');
 
         $entradasSalesMesAnterior = Sale::where('is_paid', true)
             ->whereMonth('created_at', Carbon::now()->subMonth()->month)
@@ -58,8 +58,8 @@ class Status extends Component
             ->sum('total_price');
 
         // Total de entradas para o mês atual e o mês anterior
-        $this->entradasMesAtual = $entradasServicesMesAtual + $entradasSalesMesAtual;
-        $this->entradasMesAnterior = $entradasServicesMesAnterior + $entradasSalesMesAnterior;
+        // $this->entradasMesAtual = $entradasServicesMesAtual + $entradasSalesMesAtual;
+        // $this->entradasMesAnterior = $entradasServicesMesAnterior + $entradasSalesMesAnterior;
 
         // Comparação entre os dois meses
         if ($this->entradasMesAnterior > 0) {
